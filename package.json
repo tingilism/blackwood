@@ -1,0 +1,20 @@
+{
+  "name": "blackwood-landscaping",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Blackwood Landscaping — static site + serverless quote handler (email-only, no DB)",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "resend": "^4.0.0"
+  },
+  "devDependencies": {
+    "vercel": "^39.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
