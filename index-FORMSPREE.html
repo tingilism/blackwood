@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============================================================
+     SECURITY HEADERS (meta-level; reinforce at the CDN/host)
+     ============================================================ -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self';
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src https://fonts.gstatic.com;
+  img-src 'self' data:;
+  connect-src 'self';
+  form-action 'self';
+  frame-ancestors 'none';
+  base-uri 'self';
+  object-src 'none';
+  upgrade-insecure-requests;
+">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="index, follow">
+
+<title>Blackwood Landscaping — Estate Grounds & Garden Architecture</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4efe6;
+    --paper-deep: #ebe4d4;
+    --ink: #1a1f17;
+    --moss: #2d3a26;
+    --forest: #1f2a1c;
+    --pine: #344a2c;
+    --bark: #5c4a32;
+    --gold: #b08d3e;
+    --gold-soft: #c9a44a;
+    --stone: #8a8675;
+    --cream: #faf6ec;
+    --rule: rgba(26,31,23,0.18);
+    --error: #8b2e2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  /* === ACCESSIBILITY: skip link, focus indicators, reduced motion === */
+  .skip-link {
+    position: absolute; top: -100px; left: 16px;
+    background: var(--forest); color: var(--cream);
+    padding: 12px 20px; text-decoration: none;
+    font-family: 'Inter', sans-serif; font-weight: 500;
+    border-radius: 2px; z-index: 1000; transition: top 0.15s;
+  }
+  .skip-link:focus { top: 16px; outline: 3px solid var(--gold); outline-offset: 2px; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible,
+  select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+    outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 2px;
+  }
+  .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
+    outline-offset: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .reveal { opacity: 1 !important; transform: none !important; }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(180,160,120,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 85% 70%, rgba(60,80,50,0.06) 0%, transparent 45%);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+
+  .display { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 400; letter-spacing: -0.02em; }
+  .serif { font-family: 'Bricolage Grotesque', sans-serif; }
+
+  /* ===== HONEYPOT — must be invisible to humans, accessible to bots ===== */
+  .hp-trap {
+    position: absolute !important;
+    left: -10000px !important;
+    top: auto !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 22px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(244,239,230,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--ink); }
+  .brand-mark { width: 38px; height: 38px; display: grid; place-items: center; }
+  .brand-mark svg, .brand-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .brand-name { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.4rem; letter-spacing: 0.04em; font-weight: 500; line-height: 1; }
+  .brand-sub { font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bark); margin-top: 3px; }
+
+  .nav-links { display: flex; gap: 38px; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--ink); font-size: 0.82rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500; position: relative; padding: 6px 0; transition: color 0.2s; }
+  .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s ease; }
+  .nav-links a:hover { color: var(--moss); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta { background: var(--forest); color: var(--cream) !important; padding: 12px 22px !important; border-radius: 2px; }
+  .nav-cta::after { display: none; }
+  .nav-cta:hover { background: var(--moss); color: var(--cream) !important; }
+
+  /* ===== HERO ===== */
+  .hero { min-height: 100vh; padding: 160px 56px 80px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; align-items: center; position: relative; }
+  .hero-eyebrow { font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-size: 1.1rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--bark); margin-bottom: 28px; display: flex; align-items: center; gap: 18px; }
+  .hero-eyebrow::before { content: ''; width: 60px; height: 1px; background: var(--bark); }
+  .hero h1 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(3.2rem, 7vw, 6.4rem); line-height: 0.95; letter-spacing: -0.03em; color: var(--forest); margin-bottom: 36px; }
+  .hero h1 em { font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-weight: 400; color: var(--moss); }
+  .hero-lead { font-family: 'Inter', sans-serif; font-size: 1.25rem; line-height: 1.6; color: var(--ink); max-width: 480px; margin-bottom: 44px; font-weight: 400; }
+  .hero-actions { display: flex; gap: 18px; align-items: center; }
+
+  .btn-primary, .btn-secondary { text-decoration: none; padding: 16px 32px; font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 12px; border-radius: 2px; }
+  .btn-primary { background: var(--forest); color: var(--cream); border: 1px solid var(--forest); }
+  .btn-primary:hover { background: var(--moss); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(31,42,28,0.18); }
+  .btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .btn-secondary:hover { background: var(--ink); color: var(--cream); }
+
+  .hero-visual { position: relative; aspect-ratio: 3/4; max-height: 640px; }
+  .hero-frame { position: absolute; inset: 0; border: 1px solid var(--rule); background: linear-gradient(135deg, rgba(45,58,38,0.04), rgba(176,141,62,0.06)), var(--paper-deep); overflow: hidden; }
+  .hero-illustration { width: 100%; height: 100%; }
+  .hero-frame::before, .hero-frame::after { content: ''; position: absolute; width: 24px; height: 24px; border: 1px solid var(--bark); }
+  .hero-frame::before { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+  .hero-frame::after { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+
+  section { position: relative; z-index: 2; }
+  .section-eyebrow { font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-size: 0.95rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--bark); display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+  .section-eyebrow::before { content: '§'; font-style: normal; font-family: 'Bricolage Grotesque', sans-serif; color: var(--bark); font-size: 1.2rem; }
+  .section-title { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(2.4rem, 4.4vw, 3.8rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--forest); margin-bottom: 24px; max-width: 720px; }
+  .section-title em { font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; color: var(--moss); }
+
+  /* ===== ETHOS ===== */
+  .ethos { padding: 140px 56px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); background: var(--cream); }
+  .ethos-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 100px; align-items: start; }
+  .ethos-lead { font-family: 'Inter', sans-serif; font-size: 1.25rem; line-height: 1.6; color: var(--ink); }
+  .ethos-lead .drop { font-family: 'Bricolage Grotesque', sans-serif; font-size: 4.5rem; line-height: 0.85; color: var(--moss); float: left; padding: 8px 12px 0 0; font-weight: 400; }
+
+  /* ===== SERVICES ===== */
+  .services { padding: 140px 56px; border-top: 1px solid var(--rule); }
+  .services-header { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; margin-bottom: 80px; }
+  .services-intro { font-family: 'Inter', sans-serif; font-size: 1.25rem; line-height: 1.6; color: var(--ink); max-width: 480px; justify-self: end; }
+  .service-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1px solid var(--ink); }
+  .service-row { display: grid; grid-template-columns: auto 1fr; gap: 40px; padding: 44px 32px; border-bottom: 1px solid var(--rule); transition: background 0.3s, padding 0.3s; cursor: default; }
+  .service-row:nth-child(odd) { border-right: 1px solid var(--rule); }
+  .service-row:hover { background: var(--cream); padding-left: 44px; }
+  .service-num { font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-size: 1.1rem; color: var(--bark); padding-top: 8px; }
+  .service-content h3 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 400; font-size: 1.7rem; color: var(--forest); margin-bottom: 12px; letter-spacing: -0.01em; }
+  .service-content p { color: var(--ink); font-size: 0.95rem; line-height: 1.6; opacity: 0.82; }
+  .service-content .tag { display: inline-block; margin-top: 16px; font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-size: 0.85rem; color: var(--bark); letter-spacing: 0.08em; }
+
+  /* ===== PORTFOLIO ===== */
+  .portfolio { padding: 140px 56px; background: var(--forest); color: var(--cream); position: relative; overflow: hidden; }
+  .portfolio::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 0.9 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)'/%3E%3C/svg%3E"); opacity: 0.6; pointer-events: none; }
+  .portfolio .section-eyebrow { color: var(--cream); }
+  .portfolio .section-eyebrow::before { color: var(--cream); }
+  .portfolio .section-title { color: var(--cream); }
+  .portfolio .section-title em { color: var(--cream); }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 70px; position: relative; z-index: 1; }
+  .project { cursor: pointer; transition: transform 0.4s ease; }
+  .project:hover { transform: translateY(-6px); }
+  .project-image { aspect-ratio: 4/5; background: var(--moss); margin-bottom: 24px; position: relative; overflow: hidden; border: 1px solid rgba(201,164,74,0.2); }
+  .project-image svg, .project-image img { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+  /* ===== REVIEWS ===== */
+  .reviews { padding: 140px 56px; background: var(--cream); border-top: 1px solid var(--rule); }
+  .reviews-header { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; margin-bottom: 70px; }
+  .reviews-aggregate { justify-self: end; text-align: right; }
+  .stars { font-family: 'Bricolage Grotesque', sans-serif; color: var(--gold); font-size: 1.4rem; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .aggregate-score { font-family: 'Bricolage Grotesque', sans-serif; font-size: 2.2rem; color: var(--forest); font-weight: 400; }
+  .aggregate-meta { font-family: 'Inter', sans-serif; font-style: italic; color: var(--bark); margin-top: 4px; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-bottom: 80px; }
+  .reviews-grid:empty { margin-bottom: 0; }
+  .review-card { background: var(--paper); border: 1px solid var(--rule); padding: 38px 32px; position: relative; transition: transform 0.3s, box-shadow 0.3s; }
+  .review-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(26,31,23,0.08); }
+  .review-card::before { content: '"'; position: absolute; top: 8px; left: 22px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 5rem; color: var(--gold); opacity: 0.25; line-height: 1; }
+  .review-stars { color: var(--gold); font-size: 0.95rem; letter-spacing: 0.15em; margin-bottom: 18px; position: relative; }
+  .review-text { font-family: 'Inter', sans-serif; font-size: 1.15rem; line-height: 1.55; color: var(--ink); margin-bottom: 28px; position: relative; word-break: break-word; }
+  .review-author { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .reviewer-name { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.05rem; color: var(--forest); }
+  .review-date { font-size: 0.78rem; color: var(--bark); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* leave a review */
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+  .field { display: flex; flex-direction: column; }
+  .field label { font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bark); margin-bottom: 8px; font-weight: 500; }
+  .field input, .field select, .field textarea { background: transparent; border: none; border-bottom: 1px solid var(--rule); padding: 10px 0; font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--ink); transition: border-color 0.2s; border-radius: 0; outline: none; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-bottom-color: var(--moss); }
+  .field input.invalid, .field textarea.invalid { border-bottom-color: var(--error); }
+  .field textarea { resize: vertical; min-height: 110px; line-height: 1.6; max-height: 400px; }
+  .field-full { grid-column: 1 / -1; }
+  .field-error { color: var(--error); font-size: 0.78rem; margin-top: 6px; font-family: 'Inter', sans-serif; font-style: italic; display: none; }
+  .field-error.show { display: block; }
+  .char-count { font-size: 0.72rem; color: var(--bark); margin-top: 4px; text-align: right; font-family: 'Inter', sans-serif; font-style: italic; }
+
+  .form-submit { margin-top: 28px; width: 100%; background: var(--forest); color: var(--cream); border: none; padding: 18px; font-family: 'Inter', sans-serif; font-size: 0.82rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; cursor: pointer; transition: background 0.25s; border-radius: 2px; }
+  .form-submit:hover:not(:disabled) { background: var(--moss); }
+  .form-submit:disabled { opacity: 0.6; cursor: wait; }
+  .form-success, .form-error { display: none; text-align: center; padding: 24px; margin-top: 16px; font-family: 'Inter', sans-serif; font-style: italic; font-size: 1.1rem; }
+  .form-success { background: rgba(176,141,62,0.1); border: 1px solid var(--gold); color: var(--forest); }
+  .form-error { background: rgba(139,46,46,0.08); border: 1px solid var(--error); color: var(--error); }
+  .form-success.show, .form-error.show { display: block; }
+
+  .privacy-notice { font-family: 'Inter', sans-serif; font-style: italic; font-size: 0.92rem; color: var(--bark); padding: 18px 22px; background: rgba(176,141,62,0.06); border-left: 2px solid var(--gold); margin-top: 24px; margin-bottom: 8px; line-height: 1.5; }
+
+  /* ===== CONTRACT ===== */
+  .contract { padding: 140px 56px; background: var(--paper); border-top: 1px solid var(--rule); }
+  .contract-wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
+  .contract-sidebar h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(2.4rem, 4.4vw, 3.8rem); line-height: 1.05; color: var(--forest); margin-bottom: 24px; letter-spacing: -0.02em; }
+  .contract-sidebar h2 em { font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; color: var(--moss); }
+  .contract-sidebar p { font-family: 'Inter', sans-serif; font-size: 1.25rem; line-height: 1.6; color: var(--ink); margin-bottom: 32px; }
+  .contract-list { list-style: none; padding-top: 28px; border-top: 1px solid var(--rule); }
+  .contract-list { counter-reset: list; }
+  .contract-list li { padding: 14px 0; border-bottom: 1px dashed var(--rule); display: flex; gap: 16px; align-items: baseline; font-size: 0.95rem; color: var(--ink); }
+  .contract-list li::before { content: counter(list, lower-roman) '.'; counter-increment: list; font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; color: var(--bark); font-size: 1.05rem; min-width: 30px; }
+
+  .contract-form { background: var(--cream); padding: 56px 52px; border: 1px solid var(--rule); position: relative; }
+  .contract-form::before { content: 'CONTRACT NO. ' attr(data-num); position: absolute; top: -14px; left: 32px; background: var(--paper); padding: 4px 14px; font-size: 0.7rem; letter-spacing: 0.25em; color: var(--bark); font-weight: 500; }
+
+  .contract-section { margin-bottom: 36px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+  .contract-section:last-of-type { border-bottom: none; margin-bottom: 16px; padding-bottom: 0; }
+  .contract-section-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.1rem; color: var(--forest); margin-bottom: 22px; display: flex; align-items: center; gap: 12px; }
+  .contract-section-title::before { content: attr(data-step); font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; color: var(--bark); font-size: 0.95rem; letter-spacing: 0.1em; }
+
+  .checkbox-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 18px; }
+  .check-item { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 8px 0; font-size: 0.92rem; color: var(--ink); }
+  .check-item input { display: none; }
+  .check-box { width: 18px; height: 18px; border: 1px solid var(--bark); display: grid; place-items: center; transition: background 0.2s; flex-shrink: 0; }
+  .check-item input:checked + .check-box { background: var(--forest); border-color: var(--forest); }
+  .check-item input:checked + .check-box::after { content: '✓'; color: var(--cream); font-size: 0.85rem; line-height: 1; }
+
+  .terms { display: flex; align-items: flex-start; gap: 12px; margin-top: 20px; margin-bottom: 8px; font-family: 'Inter', sans-serif; font-size: 1.02rem; color: var(--ink); line-height: 1.5; }
+  .terms .check-box { margin-top: 4px; }
+
+
+  /* ===== FOOTER ===== */
+  footer { background: var(--forest); color: var(--cream); padding: 90px 56px 40px; position: relative; z-index: 2; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 80px; margin-bottom: 70px; }
+  .footer-brand .brand-name { color: var(--cream); font-size: 1.6rem; }
+  .footer-brand .brand-sub { color: var(--gold-soft); }
+  .footer-brand p { font-family: 'Inter', sans-serif; font-size: 1.1rem; line-height: 1.6; margin-top: 24px; color: rgba(250,246,236,0.75); max-width: 360px; }
+  .footer-col h3 { font-size: 0.74rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 22px; font-weight: 500; }
+  .footer-col a, .footer-col p { display: block; color: rgba(250,246,236,0.75); text-decoration: none; padding: 5px 0; transition: color 0.2s; font-family: 'Inter', sans-serif; font-size: 1.05rem; }
+  .footer-col a:hover { color: var(--gold-soft); }
+  .footer-base { padding-top: 32px; border-top: 1px solid rgba(250,246,236,0.12); display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: rgba(250,246,236,0.5); letter-spacing: 0.1em; }
+
+  @media (max-width: 1024px) {
+    nav { padding: 18px 32px; }
+    .hero, .ethos, .services, .portfolio, .reviews, .contract { padding-left: 32px; padding-right: 32px; }
+    .hero { grid-template-columns: 1fr; gap: 60px; padding-top: 140px; }
+    .ethos-grid, .services-header, .reviews-header, .contract-wrap { grid-template-columns: 1fr; gap: 40px; }
+    .reviews-aggregate { justify-self: start; text-align: left; }
+    .service-list, .portfolio-grid, .reviews-grid { grid-template-columns: 1fr; }
+    .service-row:nth-child(odd) { border-right: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 16px 20px; flex-wrap: wrap; gap: 12px; }
+    .nav-links { gap: 18px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero, .ethos, .services, .portfolio, .reviews, .contract { padding-left: 20px; padding-right: 20px; }
+    .contract-form { padding: 40px 24px; }
+    .form-row, .checkbox-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+    .footer-base { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Skip link for keyboard and screen reader users (WCAG 2.4.1) -->
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<nav>
+  <a href="#" class="brand">
+    <div class="brand-mark">
+      <img src="logo-dark.png" alt="Blackwood Landscaping logo" width="38" height="38">
+    </div>
+    <div>
+      <div class="brand-name">BLACKWOOD</div>
+      <div class="brand-sub">Landscaping · Est. 2024</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#services">What We Do</a>
+    <a href="#ethos">About Us</a>
+    <a href="#portfolio">Our Work</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#contract" class="nav-cta">Contact Us</a>
+  </div>
+</nav>
+
+<section class="hero" id="main">
+  <div class="reveal">
+    <div class="hero-eyebrow">Started 2024 · Serving All of Long Island</div>
+    <h1>Quality work<br>for every yard on<br><em>Long Island.</em></h1>
+    <p class="hero-lead">Blackwood is a local landscaping company serving all of Long Island. We handle lawn maintenance, spring and fall cleanups, mulch, hedge trimming, pressure washing, and snow removal. We show up when we say we will, do the job right, and treat your property like it's our own.</p>
+    <div class="hero-actions">
+      <a href="#contract" class="btn-primary">Get a Free Quote →</a>
+      <a href="#portfolio" class="btn-secondary">See Our Work</a>
+    </div>
+  </div>
+  <div class="hero-visual reveal">
+    <div class="hero-frame">
+      <svg class="hero-illustration" viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <radialGradient id="clearing" cx="50%" cy="42%" r="38%">
+            <stop offset="0%" stop-color="#f1ecdf" stop-opacity="0.92"/>
+            <stop offset="50%" stop-color="#dfe0ca" stop-opacity="0.45"/>
+            <stop offset="100%" stop-color="#dfe0ca" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c9d0b2"/>
+            <stop offset="45%" stop-color="#cfd5b8"/>
+            <stop offset="100%" stop-color="#d8dabf"/>
+          </linearGradient>
+        </defs>
+
+        <!-- narrow sky strip; the forest fills almost everything -->
+        <rect width="400" height="530" fill="url(#sky)"/>
+
+        <!-- band 1: distant ridge, palest, misty -->
+        <g fill="#8e9a73" opacity="0.4">
+          <path d="M0 150 L14 96 L26 140 L40 84 L54 138 L70 100 L84 150 Z"/>
+          <path d="M64 150 L80 92 L94 138 L108 80 L124 138 L138 98 L156 150 Z"/>
+          <path d="M138 150 L154 88 L168 138 L184 78 L200 138 L214 96 L232 150 Z"/>
+          <path d="M214 150 L230 92 L246 138 L260 80 L276 138 L292 98 L308 150 Z"/>
+          <path d="M290 150 L306 90 L322 138 L338 78 L354 138 L370 96 L388 150 Z"/>
+          <path d="M360 150 L376 96 L388 138 L400 100 L400 150 Z"/>
+        </g>
+
+        <!-- band 2 -->
+        <g fill="#6f7d54" opacity="0.55">
+          <path d="M-8 230 L10 150 L28 205 L48 138 L68 205 L88 155 L108 230 Z"/>
+          <path d="M86 230 L104 148 L124 205 L144 132 L166 205 L186 152 L208 230 Z"/>
+          <path d="M188 230 L206 146 L226 205 L246 134 L268 205 L288 152 L310 230 Z"/>
+          <path d="M290 230 L308 148 L328 205 L348 134 L368 205 L388 152 L410 230 Z"/>
+        </g>
+
+        <!-- band 3 -->
+        <g fill="#52613c" opacity="0.7">
+          <path d="M-12 305 L8 215 L30 278 L52 200 L74 278 L96 222 L120 305 Z"/>
+          <path d="M100 305 L122 212 L144 280 L166 196 L190 280 L212 220 L238 305 Z"/>
+          <path d="M218 305 L240 214 L262 280 L284 198 L308 280 L330 220 L356 305 Z"/>
+          <path d="M330 305 L352 212 L374 280 L396 198 L412 270 L412 305 Z"/>
+        </g>
+
+        <!-- band 4 -->
+        <g fill="#384a2c">
+          <path d="M-16 385 L8 280 L32 350 L58 262 L84 350 L110 300 L138 385 Z"/>
+          <path d="M118 385 L142 276 L168 350 L194 258 L220 350 L246 300 L276 385 Z"/>
+          <path d="M256 385 L280 278 L306 350 L332 260 L358 350 L384 300 L414 385 Z"/>
+        </g>
+
+        <!-- band 5: nearest, darkest, tallest -->
+        <g fill="#1f2a1c">
+          <path d="M-20 480 L8 340 L34 415 L62 320 L90 415 L118 360 L148 480 Z"/>
+          <path d="M128 480 L156 334 L184 418 L212 314 L240 418 L268 360 L300 480 Z"/>
+          <path d="M278 480 L306 338 L334 416 L362 318 L390 416 L418 360 L440 480 Z"/>
+        </g>
+
+        <!-- forest floor -->
+        <rect x="0" y="465" width="400" height="65" fill="#161e12"/>
+        <path d="M0 465 Q200 448 400 465 L400 492 Q200 476 0 492 Z" fill="#1f2a1c"/>
+
+        <!-- soft light clearing so the mark reads -->
+        <rect width="400" height="530" fill="url(#clearing)"/>
+        <circle cx="200" cy="210" r="118" fill="#eef0dd" opacity="0.22"/>
+
+        <!-- BLACKWOOD logo, centered focal point -->
+        <image href="logo-dark.png" x="120" y="148" width="160" height="160" opacity="0.97"/>
+
+        <!-- foreground ferns/grasses framing the base -->
+        <g stroke="#141c10" stroke-width="2.4" fill="none" opacity="0.9">
+          <path d="M30 530 Q28 470 38 436 M44 530 Q48 466 58 438 M52 530 Q60 474 72 448"/>
+          <path d="M120 530 Q118 486 126 460 M132 530 Q136 482 144 462"/>
+          <path d="M370 530 Q368 470 358 436 M356 530 Q352 466 342 438 M348 530 Q340 474 328 448"/>
+          <path d="M280 530 Q282 486 274 460 M268 530 Q264 482 256 462"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="services-header">
+    <div class="reveal">
+      <div class="section-eyebrow">What We Do</div>
+      <h2 class="section-title">Here's the work <em>we do.</em></h2>
+    </div>
+    <p class="services-intro reveal">We handle all of this work ourselves and never hand it off to other crews. The people you talk to are the same people doing the job. Here's everything we can do for you.</p>
+  </div>
+
+  <div class="service-list">
+    <div class="service-row reveal"><div class="service-num">1.</div><div class="service-content"><h3>Lawn Maintenance</h3><p>We mow, edge, and keep your lawn neat and healthy all season. Choose weekly or every-other-week service, whichever works best for you.</p><span class="tag">Weekly or every 2 weeks</span></div></div>
+    <div class="service-row reveal"><div class="service-num">2.</div><div class="service-content"><h3>Spring & Fall Cleanup</h3><p>We clear leaves, branches, and winter debris in spring, and get your yard ready for the cold in fall. A clean start and a clean finish to the year.</p><span class="tag">Twice a year</span></div></div>
+    <div class="service-row reveal"><div class="service-num">3.</div><div class="service-content"><h3>Mulch</h3><p>We lay fresh mulch around your beds and trees. It keeps your plants healthy, holds in water, and makes the whole yard look sharp.</p><span class="tag">Free price quote</span></div></div>
+    <div class="service-row reveal"><div class="service-num">4.</div><div class="service-content"><h3>Hedge Trimming</h3><p>We shape and trim hedges, bushes, and shrubs so they stay full and even. Done by hand, with care, not rushed.</p><span class="tag">One-time or regular</span></div></div>
+    <div class="service-row reveal"><div class="service-num">5.</div><div class="service-content"><h3>Pressure Washing</h3><p>We clean dirt, mold, and stains off patios, walkways, driveways, and siding. Your surfaces come back looking close to new.</p><span class="tag">Free price quote</span></div></div>
+    <div class="service-row reveal"><div class="service-num">6.</div><div class="service-content"><h3>Snow Removal</h3><p>We plow and shovel snow all winter long, clearing driveways and walkways and salting them so no one slips. Homes and businesses.</p><span class="tag">All winter or one storm</span></div></div>
+    <div class="service-row reveal"><div class="service-num">7.</div><div class="service-content"><h3>Thatching & Core Aeration</h3><p>We break up built-up thatch and pull small plugs from the soil so your lawn can breathe. This helps water and nutrients reach the roots and brings tired grass back to life.</p><span class="tag">Best in spring or fall</span></div></div>
+  </div>
+</section>
+
+<section class="ethos" id="ethos">
+  <div class="section-eyebrow">About Us</div>
+  <h2 class="section-title">Why we <em>started Blackwood.</em></h2>
+  <div class="ethos-grid" style="margin-top: 60px;">
+    <p class="ethos-lead reveal">
+      <span class="drop">F</span>or years, we worked for other landscaping companies, and we kept running into the same problem: crews rushing through jobs and cutting corners just to get to the next one. We knew there was a better way to do this work, so in 2024 we started our own company built around it. Since then we've completed more than 60 yards across Long Island, and the two owners are still on site for every single job, start to finish. We always walk your property and talk through the plan with you before any work begins.
+    </p>
+    <div class="reveal">
+      <p style="font-family:'Inter',sans-serif; font-size:1.25rem; line-height:1.6; color:var(--ink);">We take on jobs of any size, from a single cleanup to keeping your whole property looking sharp all year. We use quality materials and take the time to do the work properly. You get a clear price before we start, with no hidden costs and no surprises at the end.</p>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio" id="portfolio">
+  <div class="section-eyebrow reveal">Our Work</div>
+  <h2 class="section-title reveal">Some yards <em>we've worked on.</em></h2>
+  <div class="portfolio-grid">
+    <div class="project reveal"><div class="project-image"><img src="portfolio-1.jpg" alt="Freshly mowed front lawn with crisp parallel stripes in front of a split-level home with landscaped beds" loading="lazy"></div></div>
+    <div class="project reveal"><div class="project-image"><img src="portfolio-2.jpg" alt="Striped front lawn with mature trees and a curving driveway" loading="lazy"></div></div>
+    <div class="project reveal"><div class="project-image"><img src="portfolio-3.jpg" alt="Healthy edged lawn alongside a clean concrete walkway in front of a colonial home" loading="lazy"></div></div>
+    <div class="project reveal"><div class="project-image"><img src="portfolio-6.jpg" alt="Tidy front yard with paver driveway and curbed planting beds" loading="lazy"></div></div>
+    <div class="project reveal"><div class="project-image"><img src="portfolio-4.jpg" alt="Ranch home with trimmed hedges, healthy lawn, and mature shrubs" loading="lazy"></div></div>
+    <div class="project reveal"><div class="project-image"><img src="portfolio-5.jpg" alt="Manicured lawn at a ranch property with mailbox and clean driveway entrance" loading="lazy"></div></div>
+  </div>
+</section>
+
+<section class="contract" id="contract">
+  <div class="contract-wrap">
+    <div class="contract-sidebar reveal">
+      <div class="section-eyebrow">Get Started</div>
+      <h2>Get a <em>free quote</em>.</h2>
+      <p>Fill out the form below and tell us what you need. There's no cost and no obligation to hire us — this just lets us know you'd like help with your property.</p>
+      <ol class="contract-list">
+        <li>Fill out the form and tell us as much as you can about the job.</li>
+        <li>We'll call or email you within three days.</li>
+        <li>We come out to look at your property. The first visit is free.</li>
+        <li>You get a written price with no hidden costs or surprises.</li>
+        <li>If you'd like to move forward, we set a date and get to work.</li>
+      </ol>
+    </div>
+
+    <form class="contract-form" data-num="2026-A" id="contractForm" action="https://formspree.io/f/xpqgwapq" method="POST" novalidate autocomplete="on">
+      <!-- honeypot -->
+      <div class="hp-trap" aria-hidden="true">
+        <label>Fax (leave blank)<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <div class="contract-section">
+        <div class="contract-section-title" data-step="1.">Your Name and Number</div>
+        <div class="form-row">
+          <div class="field">
+            <label for="ct_first">First Name</label>
+            <input type="text" id="ct_first" name="firstName" required maxlength="60" autocomplete="given-name">
+            <div class="field-error" data-for="ct_first">First name is required.</div>
+          </div>
+          <div class="field">
+            <label for="ct_last">Last Name</label>
+            <input type="text" id="ct_last" name="lastName" required maxlength="60" autocomplete="family-name">
+            <div class="field-error" data-for="ct_last">Last name is required.</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="ct_phone">Phone Number</label>
+            <input type="tel" id="ct_phone" name="phone" required maxlength="25" autocomplete="tel" inputmode="tel" pattern="[\d\s\(\)\+\-\.x,]{7,25}">
+            <div class="field-error" data-for="ct_phone">Please enter a valid phone number.</div>
+          </div>
+          <div class="field">
+            <label for="ct_email">Email</label>
+            <input type="email" id="ct_email" name="email" required maxlength="120" autocomplete="email" inputmode="email">
+            <div class="field-error" data-for="ct_email">Please enter a valid email address.</div>
+          </div>
+        </div>
+        <div class="field field-full" style="margin-top:18px;">
+          <label for="ct_contact">How should we reach you?</label>
+          <select id="ct_contact" name="contact">
+            <option>Call me</option>
+            <option>Email me</option>
+            <option>Text me</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="contract-section">
+        <div class="contract-section-title" data-step="2.">Where Is the Job?</div>
+        <div class="field field-full" style="margin-bottom:18px;">
+          <label for="ct_addr">Street Address</label>
+          <input type="text" id="ct_addr" name="address" required maxlength="160" autocomplete="street-address">
+          <div class="field-error" data-for="ct_addr">Please enter the property address.</div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="ct_town">Town</label>
+            <input type="text" id="ct_town" name="town" required maxlength="80" autocomplete="address-level2">
+            <div class="field-error" data-for="ct_town">Town is required.</div>
+          </div>
+          <div class="field">
+            <label for="ct_acre">How big is your yard?</label>
+            <select id="ct_acre" name="acreage">
+              <option>Small (city lot)</option>
+              <option>Medium (normal yard)</option>
+              <option>Large (lots of land)</option>
+              <option>Very large</option>
+              <option>I am not sure</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="contract-section">
+        <div class="contract-section-title" data-step="3.">What Do You Need?</div>
+        <div class="checkbox-grid">
+          <label class="check-item"><input type="checkbox" name="services[]" value="lawn"><span class="check-box"></span>Lawn Maintenance</label>
+          <label class="check-item"><input type="checkbox" name="services[]" value="cleanup"><span class="check-box"></span>Spring/Fall Cleanup</label>
+          <label class="check-item"><input type="checkbox" name="services[]" value="mulch"><span class="check-box"></span>Mulch</label>
+          <label class="check-item"><input type="checkbox" name="services[]" value="hedge"><span class="check-box"></span>Hedge Trimming</label>
+          <label class="check-item"><input type="checkbox" name="services[]" value="pressure"><span class="check-box"></span>Pressure Washing</label>
+          <label class="check-item"><input type="checkbox" name="services[]" value="snow"><span class="check-box"></span>Snow Removal</label>
+          <label class="check-item"><input type="checkbox" name="services[]" value="aeration"><span class="check-box"></span>Thatching & Core Aeration</label>
+        </div>
+      </div>
+
+      <div class="contract-section">
+        <div class="contract-section-title" data-step="4.">Tell Us More</div>
+        <div class="form-row">
+          <div class="field">
+            <label for="ct_budget">About how much can you spend?</label>
+            <select id="ct_budget" name="budget">
+              <option>Under $100</option>
+              <option>$100 — $500</option>
+              <option>$500 — $1,500</option>
+              <option>$1,500 — $5,000</option>
+              <option>Over $5,000</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ct_season">When do you want this done?</label>
+            <select id="ct_season" name="season">
+              <option>As soon as you can</option>
+              <option>This spring</option>
+              <option>This summer</option>
+              <option>This fall</option>
+              <option>No rush</option>
+            </select>
+          </div>
+        </div>
+        <div class="field field-full" style="margin-top:18px;">
+          <label for="ct_notes">What do you want done?</label>
+          <textarea id="ct_notes" name="notes" maxlength="3000" placeholder="Tell us what you need. What does your yard look like now? What do you want it to look like? Write as much or as little as you want."></textarea>
+          <div class="char-count" id="ct_count">0 / 3000</div>
+        </div>
+      </div>
+
+      <div class="contract-section">
+        <div class="contract-section-title" data-step="5.">One Last Thing</div>
+
+        <div class="privacy-notice">
+          <strong style="font-style:normal; color:var(--forest);">Your privacy.</strong>
+          We keep your information safe and use it only to help with your project. We never sell it or share it with anyone else, and we delete it from our records after 18 months. If you'd like it removed sooner, just email <a href="mailto:blackwoodlandscaping@yahoo.com" style="color:var(--moss); text-decoration:underline;">blackwoodlandscaping@yahoo.com</a>.
+        </div>
+
+        <label class="terms">
+          <input type="checkbox" required name="acknowledge">
+          <span class="check-box"></span>
+          <span>I understand that sending this form does not mean I've hired anyone. No work begins until we both agree on a price in writing. Blackwood works on Long Island only. I have read how my information is kept private above.</span>
+        </label>
+      </div>
+
+      <input type="hidden" name="_subject" value="New Contract Intake — Blackwood">
+      <button type="submit" class="form-submit" id="ct_submit">Send My Request</button>
+      <div class="form-success" id="contractSuccess">Thank you! We got your request and will call or email you within three days.</div>
+      <div class="form-error" id="contractError">Sorry, that didn't go through. Please try again or call us at (631) 402-3447.</div>
+    </form>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="reviews-header">
+    <div class="reveal">
+      <div class="section-eyebrow">Reviews</div>
+      <h2 class="section-title">What our <em>customers say.</em></h2>
+    </div>
+    <div class="reviews-aggregate reveal">
+      <div class="aggregate-score">Quietly earning trust.</div>
+      <div class="aggregate-meta">Reviews are added here as customers send them. Got something to share? Call or email us.</div>
+    </div>
+  </div>
+
+  <!-- review cards rendered via JS using textContent to prevent XSS -->
+  <div class="reviews-grid" id="reviewsGrid"></div>
+
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="logo-light.png" alt="Blackwood Landscaping logo" width="56" height="56" style="display:block; margin-bottom:18px;">
+      <div class="brand-name">BLACKWOOD</div>
+      <div class="brand-sub">Landscaping · Est. 2024</div>
+      <p>A local Long Island landscaping company. Honest work, fair prices, and a finished job you can count on.</p>
+    </div>
+    <div class="footer-col">
+      <h3>Get In Touch</h3>
+      <a href="tel:6314023447">(631) 402-3447</a>
+      <a href="mailto:blackwoodlandscaping@yahoo.com">blackwoodlandscaping@yahoo.com</a>
+      <a href="#contract">Get a Free Quote →</a>
+    </div>
+  </div>
+  <div class="footer-base">
+    <span>© 2024 — 2026 BLACKWOOD LANDSCAPING, LLC</span>
+    <span>NY Lic. #B-04429 · Fully insured · OSHA compliant</span>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+
+</body>
+</html>
